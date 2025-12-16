@@ -51,7 +51,7 @@ Observe DNS Traffic
 Observe RDP Traffic
 - Step 1 - In Wireshark, filter for RDP traffic only.
 - Step 2 - Observe the immediate non-stop spam of traffic.
-- Step 3 - The End. Log out of RDP's
+- Step 3 - The End.
 
 <h2>Actions and Observations</h2>
 
