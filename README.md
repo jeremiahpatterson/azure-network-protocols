@@ -6,10 +6,6 @@
 In this tutorial, we observe various network traffic to and from Azure Virtual Machines with Wireshark as well as configure a Network Security Group. <br />
 
 
-<h2>Video Demonstration</h2>
-
-- ### [YouTube: Azure Virtual Machines, Wireshark, and Network Security Groups](https://www.youtube.com)
-
 <h2>Environments and Technologies Used</h2>
 
 - Microsoft Azure (Virtual Machines/Compute)
@@ -20,14 +16,14 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 
 <h2>Operating Systems Used </h2>
 
-- Windows 10 (21H2)
-- Ubuntu Server 20.04
+- Windows 10 Enterprise, version 22H2 - x64 Gen2
+- Ubuntu Server 22.04 LTS - x64 Gen2
 
 <h2>High-Level Steps</h2>
 
 Observe ICMP Traffic
-- Step 1 - Within the Windows VM, download and open Wireshark.
-- Step 2 - Start package capture and filter for SSH traffic only.
+- Step 1 - Within the Windows VM, download and install Wireshark.
+- Step 2 - Open Wireshark and Start packet capture and filter for SSH traffic only.
 - Step 3 - Attempt to ping the private IP address of the Ubuntu VM. Observe Request and Replies within Wireshark.
 
 Configure a Firewall NSG
@@ -56,25 +52,81 @@ Observe RDP Traffic
 <h2>Actions and Observations</h2>
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img width="1603" height="381" alt="nt1" src="https://github.com/user-attachments/assets/60dbc4b3-9cd8-4dc6-96e1-6270abde9cef" />
+<img width="751" height="775" alt="nt2" src="https://github.com/user-attachments/assets/8b5e9b6b-a9d2-465a-8a7c-edded76cb817" />
+<img width="757" height="689" alt="nt3" src="https://github.com/user-attachments/assets/91dd1694-591e-4ea2-b685-9f2128e7518d" />
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Let's start by logging into the Windows VM via the Remote Desktop Protocol (RDP). In the VM section of the Azure portal, copy the Windows VM public IP address. Open RDP, click the "+" to add a PC, paste the IP into the PC name box, and click save. Click the new PC to connect and enter the credentials that were created in Azure.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img width="2680" height="1513" alt="nt4" src="https://github.com/user-attachments/assets/895752d7-3fb7-4f82-aa11-255a3f3e3ed0" />
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Within the Windows VM via RDP, open a browser and navigate to wireshark.org/download to download Wireshark. Then, install it.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img width="2134" height="1160" alt="nt5" src="https://github.com/user-attachments/assets/34649f3a-4d4c-443c-84f4-c1ec7f3c01b1" />
+<img width="2134" height="1156" alt="nt6" src="https://github.com/user-attachments/assets/a5bfa080-af04-4a8f-9c49-ede0ea5720cd" />
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Open Wireshark, select Ethernet, then click the shark fin to start packet capture. Type ICMP, then enter to filter only for ICMP traffic.
 </p>
 <br />
+
+<p>
+<img width="1315" height="813" alt="nt7" src="https://github.com/user-attachments/assets/ca504505-4e54-485b-be9b-4ab351f91c52" />
+<img width="2192" height="1701" alt="nt8" src="https://github.com/user-attachments/assets/a81785df-d79f-4c24-a5e4-9ba56aff00c9" />
+</p>
+<p>
+Let ping the Ubuntu VM to test connectivity. Go to the Ubuntu VM within Azure and copy the Private IP Address. Return to the Windows VM via RDP and open PowerShell. In the command line, type: ping (Ubuntu Private Ip). In this example, I entered: ping 10.0.0.5, then pressed Enter. You can view the replies in PowerShell, as well as the requests and Replies in Wireshark. The ping was successful.
+</p>
+<br />
+
+<p>
+<img width="1300" height="899" alt="nt10" src="https://github.com/user-attachments/assets/90ed3793-3512-40f0-9c97-f1f857c5747e" />
+<img width="1673" height="943" alt="nt11" src="https://github.com/user-attachments/assets/fb681678-4f9a-4e97-81c8-b8311f335e59" />
+</p>
+<p>
+Now, let's set up a firewall on the Ubuntu VM to block ping requests. With the Ubuntu VM in Azure, select Network Settings, then Network Security Group. Select Settings > Inbound Security Rules > Add > ICMPv4 > Deny > Add.
+</p>
+<br />
+
+<p>
+<img width="2180" height="1224" alt="nt12" src="https://github.com/user-attachments/assets/75b53ae8-d1af-4383-b143-7fe93030dc67" />
+<img width="1615" height="386" alt="nt13" src="https://github.com/user-attachments/assets/86726a28-2164-450c-a24a-cfb7886f0046" />
+</p>
+<p>
+Now, in the Windows VM via RDP, try to ping the Ubuntu VM. You will see the Request timed out in PowerShell, and no response found in Wireshark. Now return to the Ubuntu VM in Azure, and click on the trash can to delete the firewall.
+</p>
+<br />
+
+<p>
+<img width="2804" height="1288" alt="nt14" src="https://github.com/user-attachments/assets/1674bf59-7967-4f03-a3bc-997522ab6068" />
+</p>
+<p>
+Let's check SSH traffic. Still in the Windows VM via RDP, type ssh into the Wireshark search bar and press Enter. In the PowerShell command line, enter ssh (Ubuntu username@Ubuntu private IP address). In this example, I entered ssh labuser@10.0.0.5 and then pressed Enter. I then entered the Ubuntu VM password and pressed the Enter key. At the bottom of the PowerShell text, you can see labuser@ubuntu-vm in green. That means we are now connected to the Ubuntu VM. If you examine Wireshark, you can see that we are now receiving SSH traffic.
+</p>
+<br />
+
+<p>
+<img width="2684" height="1004" alt="nt15" src="https://github.com/user-attachments/assets/4b0a71c4-90e4-4d2e-b8e7-bea9f99ef5d1" />
+</p>
+<p>
+Now, let's filter for DNS traffic. Still in the Windows VM via RDP, type dns into the Wireshark search bar and press Enter. In the PowerShell command line, enter nslookup google.com. Now you can see the IP addresses that are assigned to google.com, and in Wireshark, the DNS traffic can be observed. 
+</p>
+<br />
+
+<p>
+<img width="1968" height="1018" alt="nt16" src="https://github.com/user-attachments/assets/64423507-5189-4f34-b397-5ec5ab7d9744" />
+</p>
+<p>
+Finally, let's observe RDP traffic. Still in the Windows VM via RDP, type: tcp.port == 3389 into the Wireshark search bar and press Enter. and observe the constant traffic. There is constant traffic, so the RDP user can see it in real-time.
+</p>
+<br />
+
+
